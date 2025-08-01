@@ -3,6 +3,7 @@ package com.gardrops.imageuploadservice.service;
 import com.gardrops.imageuploadservice.model.Session;
 import com.gardrops.imageuploadservice.repository.SessionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -10,6 +11,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class SessionService {
+    @Value("${app.max-images-per-session}")
+    private Long MAX_IMAGES_PER_SESSION;
 
     private final SessionRepository sessionRepository;
 
@@ -37,7 +40,7 @@ public class SessionService {
         if (session == null) {
             return false;
         }
-        return session.getImageIds().size() < 10;
+        return session.getImageIds().size() < MAX_IMAGES_PER_SESSION;
     }
 
     public boolean isSessionValid(UUID sessionId) {

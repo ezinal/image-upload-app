@@ -13,3 +13,6 @@ logging:
   level:
     com.gardrops: DEBUG
     org.springframework.web: DEBUG
+
+app:
+  max-images-per-session: 10
