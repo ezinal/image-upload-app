@@ -1,0 +1,12 @@
+package com.gardrops.imageuploadservice.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.util.UUID;
+
+@Data
+@AllArgsConstructor
+public class SessionResponse {
+    private UUID sessionId;
+}
