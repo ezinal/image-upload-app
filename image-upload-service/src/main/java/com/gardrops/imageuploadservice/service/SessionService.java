@@ -19,4 +19,41 @@ public class SessionService {
         sessionRepository.saveSession(session);
         return sessionId;
     }
+
+    public Session getSession(UUID sessionId) {
+        return sessionRepository.findSession(sessionId);
+    }
+
+    public void addImageToSession(UUID sessionId, UUID imageId) {
+        Session session = sessionRepository.findSession(sessionId);
+        if (session != null) {
+            session.addImage(imageId);
+            sessionRepository.saveSession(session);
+        }
+    }
+
+    public boolean canAddImage(UUID sessionId) {
+        Session session = sessionRepository.findSession(sessionId);
+        if (session == null) {
+            return false;
+        }
+        return session.getImageIds().size() < 10;
+    }
+
+    public boolean isSessionValid(UUID sessionId) {
+        return sessionRepository.exists(sessionId);
+    }
+
+    public boolean hasImage(UUID sessionId, UUID imageId) {
+        Session session = sessionRepository.findSession(sessionId);
+        return session != null && session.hasImage(imageId);
+    }
+
+    public void removeImageFromSession(UUID sessionId, UUID imageId) {
+        Session session = sessionRepository.findSession(sessionId);
+        if (session != null) {
+            session.removeImage(imageId);
+            sessionRepository.saveSession(session);
+        }
+    }
 }
