@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: image-processing-service
+
+server:
+  port: 8081
+
+logging:
+  level:
+    com.gardrops: DEBUG
+    org.springframework.web: DEBUG

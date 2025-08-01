@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: image-upload-service
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.gardrops: DEBUG
+    org.springframework.web: DEBUG
