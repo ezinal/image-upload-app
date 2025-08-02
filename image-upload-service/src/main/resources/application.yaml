@@ -21,3 +21,7 @@ logging:
 
 app:
   max-images-per-session: 10
+  processing-service:
+    url: http://localhost:8081
+    image-process-url: /images/process
+    image-delete-url: /images
