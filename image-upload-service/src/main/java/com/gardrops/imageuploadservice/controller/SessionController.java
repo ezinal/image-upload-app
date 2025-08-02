@@ -30,7 +30,7 @@ public class SessionController {
     @PostMapping("/{sessionId}/images")
     public ResponseEntity<UUID> uploadImage(
             @PathVariable UUID sessionId,
-            @RequestBody MultipartFile image) {
+            @RequestParam("image") MultipartFile image) {
 
         if (!sessionService.isSessionValid(sessionId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
