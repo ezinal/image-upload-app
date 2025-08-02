@@ -1,6 +1,11 @@
 spring:
   application:
     name: image-processing-service
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 server:
   port: 8081
@@ -9,3 +14,11 @@ logging:
   level:
     com.gardrops: DEBUG
     org.springframework.web: DEBUG
+
+app:
+  image-properties:
+    max-width: 720
+    max-height: 1280
+    jpeg-quality: 0.2
+    base-folder: /tmp/uploads
+  allowed-origins: 127.0.0.1,::1
