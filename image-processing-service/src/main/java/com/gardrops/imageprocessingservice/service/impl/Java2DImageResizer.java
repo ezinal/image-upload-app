@@ -1,18 +1,14 @@
-package com.gardrops.imageprocessingservice.service;
+package com.gardrops.imageprocessingservice.service.impl;
 
+import com.gardrops.imageprocessingservice.service.FileStorageService;
+import com.gardrops.imageprocessingservice.service.ImageResizer;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
 
 @Service
 public class Java2DImageResizer implements ImageResizer {
@@ -48,29 +44,11 @@ public class Java2DImageResizer implements ImageResizer {
         return resizedImage;
     }
 
-    public void resizeAndWriteJPEG(InputStream inputFile, File outputFile, int maxWidth, int maxHeight, float quality) throws IOException {
-        BufferedImage originalImage = ImageIO.read(inputFile);
+    public void resizeAndWriteJPEG(InputStream inputFile, File outputFile, int maxWidth, int maxHeight, float quality, FileStorageService fileStorageService) throws IOException {
+        BufferedImage originalImage = fileStorageService.readImageFromStream(inputFile);
 
         BufferedImage resizedImage = resizeImage(originalImage, maxWidth, maxHeight);
 
-        // Get JPEG writer
-        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpeg");
-        if (!writers.hasNext()) throw new IllegalStateException("No writers found for jpeg");
-        ImageWriter writer = writers.next();
-
-        try (ImageOutputStream ios = ImageIO.createImageOutputStream(outputFile)) {
-            writer.setOutput(ios);
-
-            // Set JPEG compression quality
-            ImageWriteParam param = writer.getDefaultWriteParam();
-            if (param.canWriteCompressed()) {
-                param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                param.setCompressionType("JPEG");
-                param.setCompressionQuality(quality); // 0.0 to 1.0
-            }
-
-            writer.write(null, new IIOImage(resizedImage, null, null), param);
-            writer.dispose();
-        }
+        fileStorageService.writeImageAsJPEG(resizedImage, outputFile, quality);
     }
 }
