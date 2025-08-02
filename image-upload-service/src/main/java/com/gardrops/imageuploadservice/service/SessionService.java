@@ -12,7 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SessionService {
     @Value("${app.max-images-per-session}")
-    private Long MAX_IMAGES_PER_SESSION;
+    private Long maxImagesPerSession;
 
     private final SessionRepository sessionRepository;
 
@@ -40,7 +40,7 @@ public class SessionService {
         if (session == null) {
             return false;
         }
-        return session.getImageIds().size() < MAX_IMAGES_PER_SESSION;
+        return session.getImageIds().size() < maxImagesPerSession;
     }
 
     public boolean isSessionValid(UUID sessionId) {
