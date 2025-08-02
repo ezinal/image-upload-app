@@ -41,8 +41,7 @@ public class ImageProcessingService {
     }
 
     private File getOutputFile(String imageName, String sessionId) throws IOException {
-        String basePath = String.format("%s/%s/", baseFolder, sessionId);
-        String destinationFilePath = basePath + imageName;
+        String destinationFilePath = getDestinationFilePath(sessionId, imageName);
 
         Path destinationPath = Paths.get(destinationFilePath);
         Path parentDir = destinationPath.getParent();
@@ -51,5 +50,17 @@ public class ImageProcessingService {
         }
 
         return destinationPath.toFile();
+    }
+
+    // TODO move file store operations to antoher class and create a strategy interface
+    private String getDestinationFilePath(String sessionId, String imageName) {
+        String basePath = String.format("%s/%s/", baseFolder, sessionId);
+        return basePath + imageName;
+    }
+
+    public void deleteImage(String sessionId, String imageId) throws IOException {
+        String imagePath = getDestinationFilePath(sessionId, imageId + ".jpg");
+        Path path = Paths.get(imagePath);
+        Files.deleteIfExists(path);
     }
 }

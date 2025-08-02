@@ -29,4 +29,16 @@ public class ImageProcessingController {
         }
     }
 
+    @DeleteMapping("/{sessionId}/{imageId}")
+    public ResponseEntity<Void> deleteImage(
+            @PathVariable String sessionId,
+            @PathVariable String imageId) {
+        try {
+            imageProcessingService.deleteImage(sessionId, imageId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) { // TODO may need to separate yetki related exceptions and file not exist exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }
