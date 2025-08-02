@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "cd220cf3-8772-4e8d-affb-7a95cdf096bb",
+		"name": "Image App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6589024"
+	},
+	"item": [
+		{
+			"name": "Image Upload Api",
+			"item": [
+				{
+					"name": "Create Session",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"",
+									"// Set sessionId as an environment variable",
+									"pm.collectionVariables.set(\"sessionId\", response.sessionId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{uploadServiceUrl}}/sessions",
+							"host": [
+								"{{uploadServiceUrl}}"
+							],
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Images From Session",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"imageId\", null);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "abc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{uploadServiceUrl}}/sessions/{{sessionId}}/images/{{imageId}}",
+							"host": [
+								"{{uploadServiceUrl}}"
+							],
+							"path": [
+								"sessions",
+								"{{sessionId}}",
+								"images",
+								"{{imageId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Image",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"",
+									"// Set imageId as an environment variable",
+									"if(response && response.length > 0) {",
+									"    pm.collectionVariables.set(\"imageId\", response);",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{uploadServiceUrl}}/sessions/{{sessionId}}/images",
+							"host": [
+								"{{uploadServiceUrl}}"
+							],
+							"path": [
+								"sessions",
+								"{{sessionId}}",
+								"images"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Session Images",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"",
+									"// Set first imageId as an environment variable",
+									"if(response.imageIds.length > 0) {",
+									"    pm.collectionVariables.set(\"imageId\", response.imageIds[0]);",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "abc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uploadServiceUrl}}/sessions/{{sessionId}}/images",
+							"host": [
+								"{{uploadServiceUrl}}"
+							],
+							"path": [
+								"sessions",
+								"{{sessionId}}",
+								"images"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Image Process Service",
+			"item": [
+				{
+					"name": "Process Image",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{processServiceUrl}}/images/process?sessionId={{sessionId}}&destinationFilePath={{imageId}}",
+							"host": [
+								"{{processServiceUrl}}"
+							],
+							"path": [
+								"images",
+								"process"
+							],
+							"query": [
+								{
+									"key": "sessionId",
+									"value": "{{sessionId}}"
+								},
+								{
+									"key": "destinationFilePath",
+									"value": "{{imageId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "uploadServiceUrl",
+			"value": "http://localhost:8080",
+			"type": "default"
+		},
+		{
+			"key": "processServiceUrl",
+			"value": "http://localhost:8081",
+			"type": "string"
+		},
+		{
+			"key": "sessionId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "imageId",
+			"value": "d101127e-8849-46d5-ad6f-43c0bffef845",
+			"type": "default"
+		}
+	]
+}
