@@ -36,7 +36,7 @@ public class ImageProcessingController {
         try {
             imageProcessingService.deleteImage(sessionId, imageId);
             return ResponseEntity.ok().build();
-        } catch (Exception e) { // TODO may need to separate yetki related exceptions and file not exist exceptions
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

@@ -1,4 +1,4 @@
-package com.gardrops.imageprocessingservice.conf;
+package com.gardrops.imageprocessingservice.security;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
