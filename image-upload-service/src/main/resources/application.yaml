@@ -25,3 +25,6 @@ app:
     url: http://localhost:8081
     image-process-url: /images/process
     image-delete-url: /images
+  rate-limit:
+    max-requests: 10
+    window-minutes: 1
