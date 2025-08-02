@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cd220cf3-8772-4e8d-affb-7a95cdf096bb",
+		"_postman_id": "966aac7a-9f96-4b4c-9f03-7e09a0b0ad44",
 		"name": "Image App",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "6589024"
@@ -113,7 +113,13 @@
 						"header": [],
 						"body": {
 							"mode": "formdata",
-							"formdata": []
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
 						},
 						"url": {
 							"raw": "{{uploadServiceUrl}}/sessions/{{sessionId}}/images",
@@ -190,7 +196,13 @@
 						"header": [],
 						"body": {
 							"mode": "formdata",
-							"formdata": []
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
 						},
 						"url": {
 							"raw": "{{processServiceUrl}}/images/process?sessionId={{sessionId}}&destinationFilePath={{imageId}}",
